@@ -1,4 +1,4 @@
-use std::{env, fs, process};
+use std::{env, error::Error, fs, process};
 
 fn main() {
     // 通过 env::args() 方法读取分析传入的命令行参数
@@ -12,11 +12,18 @@ fn main() {
     println!("Searching for {}", config.query);
     println!("In file {}", config.file_path);
 
-    // 文件内容读取
-    let contents =
-        fs::read_to_string(config.file_path).expect("Should have been able to read the file");
+    if let Err(e) = run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
+    }
+}
 
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    // 文件内容读取
+    let contents = fs::read_to_string(config.file_path)?;
     println!("With text:\n{contents}");
+
+    Ok(())
 }
 
 struct Config {
