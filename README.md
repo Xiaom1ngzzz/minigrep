@@ -1,3 +1,7 @@
+# mingrep
+
+来源于《Rust语言圣经》一书中的 入门实战部分的示例。
+
 ## 示例
 
 > cargo run -- searchstring example-filename.txt
